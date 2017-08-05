@@ -1,0 +1,56 @@
+.tile {
+	color:lightblue;
+	perspective: 800px;
+/*	position: relative; */ /* Edited to support render.js */
+	position:absolute;
+	background-color:#ff0;
+	transform:preserve-3d;
+	transition:1s;
+	transform-origin:100% center;
+	margin: 0px;
+	display: inline-block;
+}
+.tile {
+	width:100px;
+	height:100px;
+}
+.tile .front, .tile .back {
+	width:100%;
+	height:100%;
+	display:block;
+	position:absolute;
+	transition:1s;
+	backface-visibility:hidden;
+}
+.tile .front {
+	color:blue;
+	background-color:red;
+}
+.tile .back {
+	color:red;
+	background-color:green;
+}
+.tile.vertical .front {
+	transform:rotateX(-180deg);
+}
+.tile.vertical .front.active {
+	transform:rotateX(0deg);
+}
+.tile.vertical .back {
+	transform:rotateX(180deg);
+}
+.tile.vertical .back.active {
+	transform:rotateX(0deg);
+}
+.tile.horizontal .front {
+	transform:rotateY(180deg);
+}
+.tile.horizontal .front.active {
+	transform:rotateY(0deg);
+}
+.tile.horizontal .back {
+	transform:rotateY(180deg);
+}
+.tile.horizontal .back.active {
+	transform:rotateY(0deg);
+}
