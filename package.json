@@ -1,0 +1,40 @@
+{
+  "scripts": {
+    "dev": "npm run server",
+    "prod": "npm run build && npm run server:prod",
+    "build": "vite build && vite build --ssr",
+    "server": "node ./server",
+    "server:prod": "cross-env NODE_ENV=production node ./server",
+    "prerender": "npm run build && vite-plugin-ssr prerender",
+    "test": "npm run prerender && cd dist/client && serve"
+  },
+  "dependencies": {
+    "@mdx-js/react": "^2.1.0",
+    "@mdx-js/rollup": "^2.1.0",
+    "@vitejs/plugin-react": "^1.2.0",
+    "compression": "^1.7.4",
+    "cross-env": "^7.0.3",
+    "daisyui": "^2.13.5",
+    "express": "^4.17.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-seo-meta-tags": "^1.2.1",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-highlight": "^5.0.2",
+    "rehype-slug": "^5.0.1",
+    "remark-frontmatter": "^4.0.1",
+    "remark-mdx-frontmatter": "^1.1.1",
+    "vite": "^2.8.4",
+    "vite-plugin-ssr": "^0.3.61"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.2",
+    "autoprefixer": "^10.4.4",
+    "postcss": "^8.4.12",
+    "prettier": "2.6.1",
+    "prettier-plugin-tailwindcss": "^0.1.8",
+    "tailwindcss": "^3.0.23"
+  }
+}

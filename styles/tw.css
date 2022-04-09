@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+header a {
+  @apply outline-1 outline-offset-2 outline-primary-content;
+}
+
+@layer utilities {
+  .svgicon {
+    @apply mx-2 inline-block h-[1em] w-[1em] fill-current hover:text-primary;
+  }
+
+  .tag-chip {
+    @apply mr-2 inline-flex content-center justify-center rounded-full border border-primary bg-primary-content px-2 text-sm font-bold text-primary no-underline outline-primary hover:border-secondary hover:bg-secondary hover:text-primary-content;
+  }
+
+  @font-face {
+    font-family: "5x8 LCD";
+    src: url("/5x8_lcd.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @keyframes slide-left {
+    from {
+      transform: translateX(18ch);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  .lcd_display_wrapper {
+    @apply select-none;
+    font-family: "5x8 LCD";
+    background-color: #b4d82e;
+    border: 1.5ch solid #2a5e43;
+    width: 21ch;
+    box-shadow: inset -1px -1px 10px 0px green, inset 1px 1px 10px 0px green;
+    overflow: hidden;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .lcd_display_wrapper + div {
+    position: relative;
+    text-align: center;
+    top: -30px;
+    color: white;
+    z-index: 1000;
+  }
+
+  .lcd_display_wrapper:hover {
+    background-color: #ce3;
+  }
+
+  .lcd_display_wrapper .lcd_content,
+  .lcd_display_wrapper p {
+    position: relative;
+    font-weight: 700;
+    color: black;
+    text-shadow: 1px 1px 4px green;
+    animation: slide-left 5s infinite steps(100, jump-start);
+
+    padding: 0;
+    margin: 0;
+    width: max-content;
+    transform: translateX(18ch);
+  }
+
+  .lcd_display_wrapper:hover p {
+    animation: none;
+    transform: translateX(0);
+  }
+}

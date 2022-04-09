@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["./components/*"],
+      "@context/*": ["./context/*"],
+      "@default/*": ["./default/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@layouts/*": ["./layouts/*"],
+      "@renderer/*": ["./renderer/*"],
+      "@styles/*": ["./styles/*"],
+      "#types/*": ["./types/*"],
+      "@utils/*": ["./utils/*"]
+    },
+    "lib": ["ES2017"]
+  },
+  "exclude": ["node_modules/"]
+}
