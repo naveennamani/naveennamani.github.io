@@ -12,8 +12,8 @@ import { addDefaultMeta } from "@utils/addDefaultMeta";
 import type { ReactSEOMetaTagsProps } from "react-seo-meta-tags";
 import type { PageContextClient } from "#types/pageContext";
 
-import "@styles/tw.css";
 import "@styles/highlight.css";
+import "@styles/tw.css";
 
 const LayoutMapping = {
   blog: BlogPostLayout
