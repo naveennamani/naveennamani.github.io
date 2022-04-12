@@ -1,1 +1,0 @@
-import{j as r}from"./renderer/_default.page.client.tsx.5a1e6f30.js";function t(){return r.exports.jsx("div",{children:r.exports.jsx("a",{href:"https://github.com/random-programming-stuff/blog",children:"Blog"})})}export{t as Page};
