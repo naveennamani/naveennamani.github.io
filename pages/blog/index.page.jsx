@@ -27,8 +27,8 @@ export default function Page(pageProps) {
   return (
     <div className="font-serif text-lg">
       <p>
-        Welcome to my blog! Here you'll see my latest articles on{" "}
-        {availableTags.map(({ name, href, badgeClass }, index) => (
+        Welcome to my blog! Please check the following latest blog posts.
+        {/* {availableTags.map(({ name, href, badgeClass }, index) => (
           <a
             key={index}
             href={href}
@@ -36,7 +36,7 @@ export default function Page(pageProps) {
           >
             {name}
           </a>
-        ))}
+        ))} */}
       </p>
       <div>
         {latestBlogPosts.map(({ filesystemRoute, metaData }, index) => {

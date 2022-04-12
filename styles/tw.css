@@ -33,7 +33,6 @@ header a {
   }
 
   .lcd_display_wrapper {
-    @apply select-none;
     font-family: "5x8 LCD";
     background-color: #b4d82e;
     border: 1.5ch solid #2a5e43;
@@ -43,6 +42,7 @@ header a {
     margin: auto;
     position: relative;
     z-index: 1;
+    user-select: none;
   }
 
   .lcd_display_wrapper + div {

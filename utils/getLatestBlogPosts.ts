@@ -31,10 +31,6 @@ export async function getAllBlogPosts(pageContext: PageContextServer): Promise<
 export async function getLatestBlogPosts(pageContext: PageContextServer) {
   const blogPosts = await getAllBlogPosts(pageContext);
   return blogPosts.sort((post1, post2) => {
-    console.log(
-      +post1.metaData.blogPost.datePublished,
-      +post2.metaData.blogPost.datePublished
-    );
     return (
       +post2.metaData.blogPost.datePublished -
       +post1.metaData.blogPost.datePublished
