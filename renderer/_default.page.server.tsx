@@ -50,6 +50,7 @@ export function render(pageContext: PageContextServer) {
     <link rel="icon" type="image/png" sizes="16x16" href="${__SITE__URL__}/favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="manifest" href="/site.webmanifest">
+    <meta name="google-site-verification" content="lMAcWSuIpU59ZTCmR2EJSITknLE5T6pJZCdbWhpImo4"/>
     ${dangerouslySkipEscape(helmet.title.toString())}
     ${dangerouslySkipEscape(helmet.meta.toString())}
     ${dangerouslySkipEscape(helmet.link.toString())}
