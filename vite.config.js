@@ -11,10 +11,12 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkFrontmatter from "remark-frontmatter";
 import { remarkMdxFrontmatter } from "remark-mdx-frontmatter";
+import remarkGemoji from "remark-gemoji";
 
 export default defineConfig({
   define: {
     __SITE__URL__: '"https://naveennamani.github.io"'
+    // __SITE__URL__: '"http://127.0.0.1:3000"'
   },
   plugins: [
     react(),
@@ -27,7 +29,8 @@ export default defineConfig({
       ],
       remarkPlugins: [
         remarkFrontmatter,
-        [remarkMdxFrontmatter, { name: "metaData" }]
+        [remarkMdxFrontmatter, { name: "metaData" }],
+        remarkGemoji
       ]
     }),
     ssr(),

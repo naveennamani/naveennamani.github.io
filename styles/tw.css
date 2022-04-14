@@ -3,8 +3,14 @@
 @tailwind utilities;
 @tailwind variants;
 
-header a {
-  @apply outline-1 outline-offset-2 outline-primary-content;
+@layer base {
+  header a {
+    @apply outline-1 outline-offset-2 outline-primary-content;
+  }
+
+  code {
+    word-wrap: break-word;
+  }
 }
 
 @layer utilities {
@@ -59,11 +65,13 @@ header a {
 
   .lcd_display_wrapper .lcd_content,
   .lcd_display_wrapper p {
+    --lcdtime: 5s;
     position: relative;
     font-weight: 700;
     color: black;
     text-shadow: 1px 1px 4px green;
     animation: slide-left 5s infinite steps(100, jump-start);
+    animation-duration: var(--lcdtime);
 
     padding: 0;
     margin: 0;

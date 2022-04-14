@@ -30,6 +30,12 @@ function ArticleHeader() {
         <p>{description}</p>
         <p className="font-bold">
           <Time dt={datePublished} />
+          {+datePublished != +dateModified && (
+            <em>
+              {" "}
+              Last modified: <Time dt={dateModified} />
+            </em>
+          )}
         </p>
         <p>
           {tags.map((tag, index) => (
@@ -56,7 +62,10 @@ export function BlogPostLayout({ children }) {
     <>
       <NavBar currentURL={url} />
       <main className="wrapper mb-32 min-h-screen w-full bg-base-100">
-        <div id="content" className="prose mx-auto max-w-screen-md p-4 md:px-0">
+        <div
+          id="content"
+          className="prose mx-auto max-w-screen-md p-4 font-sans prose-p:text-[17px] md:px-0"
+        >
           <article>
             <ArticleHeader />
             {children}

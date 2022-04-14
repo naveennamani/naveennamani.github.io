@@ -6,7 +6,7 @@ blogPost:
   image: "/images/python/contextmenu/4.png"
   imageAlt: Contextmenu group with sub groups
   datePublished: 2020-08-30
-  dateModified: 2020-08-30
+  dateModified: 2022-04-14
   tags:
     - python
     - windows
@@ -21,7 +21,7 @@ there are too many empty folders. Digging around my python scripts folders, I
 realized that once upon a time I wrote a script to clean empty folders. The
 script takes a directory path as an argument. But copying the directory path,
 launching the cmd prompt, and passing the directory path to the script is a
-waste of time. While I was tinkering about a solution, I right-clicked on the
+waste of time. While I was thinking about a solution, I right-clicked on the
 folder and thought if only there is a menu item "Clean empty folders" that can
 run my script, that will solve my problem.
 
@@ -74,44 +74,44 @@ The structure of the registry keys and values for a single item is shown below.
 
 ```
 ROOT
-    ITEM_REG_KEY
-        = (Default) = Name of the item
-        = Icon = Path to an icon
-        command
-            = (Default) = Command
+  ITEM_REG_KEY
+    = (Default) = Name of the item
+    = Icon = Path to an icon
+    command
+      = (Default) = Command
 ```
 
 For a group of context menu items, the registry structure looks as follows.
 
 ```
 ROOT
-    GROUP_REG_KEY
-        = MUIVerb = Group name
+  GROUP_REG_KEY
+    = MUIVerb = Group name
+    = Icon = Path to an icon
+    = Subcommands =
+    Shell
+      ITEM1_REG_KEY
+        = (Default) = Name of the item1
+        = Icon = Path to an icon
+        command
+           = (Default) = Command1
+      ITEM2_REG_KEY
+        = (Default) = Name of the item2
+        = Icon = Path to an icon
+        command
+          = (Default) = Command2
+      SUBGROUP_REG_KEY
+        = MUIVerb = Subgroup name
         = Icon = Path to an icon
         = Subcommands =
         Shell
-            ITEM1_REG_KEY
-                = (Default) = Name of the item1
-                = Icon = Path to an icon
-                command
-                    = (Default) = Command1
-            ITEM2_REG_KEY
-                = (Default) = Name of the item2
-                = Icon = Path to an icon
-                command
-                    = (Default) = Command2
-            SUBGROUP_REG_KEY
-                = MUIVerb = Subgroup name
-                = Icon = Path to an icon
-                = Subcommands =
-                Shell
-                    ITEM1_REG_KEY
-                        = (Default) = Name of the item1
-                        = Icon = Path to an icon
-                        command
-                            = (Default) = Command1
-                    ...
-            ...
+          ITEM1_REG_KEY
+            = (Default) = Name of the item1
+            = Icon = Path to an icon
+            command
+              = (Default) = Command1
+          ...
+      ...
 ```
 
 ## Implementation
@@ -189,15 +189,15 @@ created.
 
 ![](/images/python/contextmenu/3.png)
 
-Congratulations, :smiley: :clap: :star2: we did it. The complete test script can
-be found at
+Congratulations, :smiley: :clap: :star2: we did it. Run the complete test script
+from the gist.
 
 <a
   href="https://gist.github.com/naninaveen/124fa967557d0719781bea129f278412"
-  target="_blank"
+  target="\_blank"
   rel="noopener noreferrer"
 >
-  this link
+  https://gist.github.com/naninaveen/124fa967557d0719781bea129f278412
 </a>
 
 ### General purpose implementation
@@ -305,39 +305,28 @@ create_group(user_key, group1)
 ```
 
 Great, that's a nice nested context menu groups with items.
-
-<br />
 ![](/images/python/contextmenu/4.png)
 
 But wait, you haven't told me about how I can remove them and how I can add
 python scripts?
 
-<h1 className="no_toc">
-  <center>
-    <a
-      href="https://github.com/naveennamani/pywin-contextmenu"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="no-underline"
-    >
-      ¯\\_(ツ)_/¯
-    </a>
-  </center>
-</h1>
-
----
+<center>
+  <a
+    href="https://github.com/naveennamani/pywin_contextmenu"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="no-underline"
+  >
+    ¯\\_(ツ)_/¯
+  </a>
+</center>
 
 ---
 
 This post is a note to myself during the development of a pypi package. Please
-checkout the pypi package [here](https://pypi.org/project/pywin-contextmenu/)
-and the source code [here](https://github.com/naveennamani/pywin_contextmenu).
+checkout the [pypi package](https://pypi.org/project/pywin-contextmenu/) and the
+[source code](https://github.com/naveennamani/pywin_contextmenu).
 
----
-
-<h4 className="no_toc" style={{ color: "red" }}>
+<h4 style={{ color: "red" }}>
   There is happiness in doing random things at random times with random people.
 </h4>
-<h1 className="no_toc">&copy; Naveen Namani</h1>
-
----

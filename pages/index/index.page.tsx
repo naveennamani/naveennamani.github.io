@@ -39,13 +39,12 @@ export function Page({ latestBlogPosts }) {
           <span className="font-mono">(-)</span>
         </p>
         <p>
-          A{" "}
-          <span
-            className="bg-primary text-primary-content"
+          <mark
+            className="bg-primary px-1 text-primary-content"
             title='console.log("Hello world!")'
           >
             self-taught
-          </span>{" "}
+          </mark>{" "}
           <span className="bg-black font-mono font-semibold text-white">
             {" >"} web developer
           </span>
