@@ -51,6 +51,13 @@ export function render(pageContext: PageContextServer) {
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="google-site-verification" content="lMAcWSuIpU59ZTCmR2EJSITknLE5T6pJZCdbWhpImo4"/>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NCSFB5RQ5X"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());gtag('config', 'G-NCSFB5RQ5X');
+    </script>
     ${dangerouslySkipEscape(helmet.title.toString())}
     ${dangerouslySkipEscape(helmet.meta.toString())}
     ${dangerouslySkipEscape(helmet.link.toString())}
