@@ -5,7 +5,7 @@
     "build": "vite build && vite build --ssr",
     "server": "node ./server",
     "server:prod": "cross-env NODE_ENV=production node ./server",
-    "prerender": "npm run build && vite-plugin-ssr prerender",
+    "prerender": "npm run build && vite-plugin-ssr prerender && node sitemap.js",
     "test": "npm run prerender && cd dist/client && serve"
   },
   "dependencies": {
