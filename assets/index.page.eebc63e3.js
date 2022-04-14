@@ -1,1 +1,0 @@
-import{j as e}from"./renderer/_default.page.client.tsx.8da333f3.js";function s({tagName:r}){return e.exports.jsxs("div",{children:["Articles related to ",e.exports.jsx("a",{children:r})," are loading."]})}export{s as default};

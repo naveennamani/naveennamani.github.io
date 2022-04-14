@@ -1,10 +1,10 @@
-import{u as a,j as e}from"./renderer/_default.page.client.tsx.8da333f3.js";const l={blogPost:{title:"Grouping custom scripts in windows right click contextmenu",description:"A simple way to organize your scripts as a group in windows contextmenu.",image:"/images/python/contextmenu/4.png",imageAlt:"Contextmenu group with sub groups",datePublished:new Date(15987456e5),dateModified:new Date(15987456e5),tags:["python","windows","contextmenu"]},slug:"/python/organizing-windows-contextmenu/"};function i(n={}){const{wrapper:t}=Object.assign({},a(),n.components);return t?e.exports.jsx(t,Object.assign({},n,{children:e.exports.jsx(r,{})})):r();function r(){const s=Object.assign({h2:"h2",a:"a",span:"span",p:"p",ol:"ol",li:"li",code:"code",pre:"pre",h3:"h3",img:"img",em:"em",hr:"hr"},a(),n.components);return e.exports.jsxs(e.exports.Fragment,{children:[e.exports.jsxs(s.h2,{id:"the-problem",children:["The problem",e.exports.jsx(s.a,{"aria-hidden":"true",tabIndex:"-1",href:"#the-problem",children:e.exports.jsx(s.span,{className:"icon icon-link"})})]}),`
+import{u as a,j as e}from"./renderer/_default.page.client.tsx.d15f7e59.js";const l={blogPost:{title:"Grouping custom scripts in windows right click contextmenu",description:"A simple way to organize your scripts as a group in windows contextmenu.",image:"/images/python/contextmenu/4.png",imageAlt:"Contextmenu group with sub groups",datePublished:new Date(15987456e5),dateModified:new Date(16498944e5),tags:["python","windows","contextmenu"]},slug:"/python/organizing-windows-contextmenu/"};function i(n={}){const{wrapper:t}=Object.assign({},a(),n.components);return t?e.exports.jsx(t,Object.assign({},n,{children:e.exports.jsx(r,{})})):r();function r(){const s=Object.assign({h2:"h2",a:"a",span:"span",p:"p",ol:"ol",li:"li",code:"code",pre:"pre",h3:"h3",img:"img",em:"em",hr:"hr"},a(),n.components);return e.exports.jsxs(e.exports.Fragment,{children:[e.exports.jsxs(s.h2,{id:"the-problem",children:["The problem",e.exports.jsx(s.a,{"aria-hidden":"true",tabIndex:"-1",href:"#the-problem",children:e.exports.jsx(s.span,{className:"icon icon-link"})})]}),`
 `,e.exports.jsx(s.p,{children:`One fine boring day, I was cleaning unnecessary files in my PC and realized that
 there are too many empty folders. Digging around my python scripts folders, I
 realized that once upon a time I wrote a script to clean empty folders. The
 script takes a directory path as an argument. But copying the directory path,
 launching the cmd prompt, and passing the directory path to the script is a
-waste of time. While I was tinkering about a solution, I right-clicked on the
+waste of time. While I was thinking about a solution, I right-clicked on the
 folder and thought if only there is a menu item "Clean empty folders" that can
 run my script, that will solve my problem.`}),`
 `,e.exports.jsxs(s.h2,{id:"finding-the-solution",children:["Finding the solution",e.exports.jsx(s.a,{"aria-hidden":"true",tabIndex:"-1",href:"#finding-the-solution",children:e.exports.jsx(s.span,{className:"icon icon-link"})})]}),`
@@ -51,41 +51,41 @@ for each item along with`}),`
 `]}),`
 `,e.exports.jsx(s.p,{children:"The structure of the registry keys and values for a single item is shown below."}),`
 `,e.exports.jsx(s.pre,{children:e.exports.jsxs(s.code,{className:"hljs language-ini",children:[`ROOT
-    `,e.exports.jsx(s.span,{className:"hljs-attr",children:"ITEM_REG_KEY"}),`
-        = (Default) = Name of the `,e.exports.jsx(s.span,{className:"hljs-attr",children:"item"}),`
-        = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
-        `,e.exports.jsx(s.span,{className:"hljs-attr",children:"command"}),`
-            = (Default) = Command
+  `,e.exports.jsx(s.span,{className:"hljs-attr",children:"ITEM_REG_KEY"}),`
+    = (Default) = Name of the `,e.exports.jsx(s.span,{className:"hljs-attr",children:"item"}),`
+    = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
+    `,e.exports.jsx(s.span,{className:"hljs-attr",children:"command"}),`
+      = (Default) = Command
 `]})}),`
 `,e.exports.jsx(s.p,{children:"For a group of context menu items, the registry structure looks as follows."}),`
 `,e.exports.jsx(s.pre,{children:e.exports.jsxs(s.code,{className:"hljs language-ini",children:[`ROOT
-    `,e.exports.jsx(s.span,{className:"hljs-attr",children:"GROUP_REG_KEY"}),`
-        = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"MUIVerb"}),` = Group name
+  `,e.exports.jsx(s.span,{className:"hljs-attr",children:"GROUP_REG_KEY"}),`
+    = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"MUIVerb"}),` = Group name
+    = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
+    = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Subcommands"}),` =
+    Shell
+      `,e.exports.jsx(s.span,{className:"hljs-attr",children:"ITEM1_REG_KEY"}),`
+        = (Default) = Name of the `,e.exports.jsx(s.span,{className:"hljs-attr",children:"item1"}),`
+        = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
+        `,e.exports.jsx(s.span,{className:"hljs-attr",children:"command"}),`
+           = (Default) = Command1
+      `,e.exports.jsx(s.span,{className:"hljs-attr",children:"ITEM2_REG_KEY"}),`
+        = (Default) = Name of the `,e.exports.jsx(s.span,{className:"hljs-attr",children:"item2"}),`
+        = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
+        `,e.exports.jsx(s.span,{className:"hljs-attr",children:"command"}),`
+          = (Default) = Command2
+      `,e.exports.jsx(s.span,{className:"hljs-attr",children:"SUBGROUP_REG_KEY"}),`
+        = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"MUIVerb"}),` = Subgroup name
         = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
         = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Subcommands"}),` =
         Shell
-            `,e.exports.jsx(s.span,{className:"hljs-attr",children:"ITEM1_REG_KEY"}),`
-                = (Default) = Name of the `,e.exports.jsx(s.span,{className:"hljs-attr",children:"item1"}),`
-                = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
-                `,e.exports.jsx(s.span,{className:"hljs-attr",children:"command"}),`
-                    = (Default) = Command1
-            `,e.exports.jsx(s.span,{className:"hljs-attr",children:"ITEM2_REG_KEY"}),`
-                = (Default) = Name of the `,e.exports.jsx(s.span,{className:"hljs-attr",children:"item2"}),`
-                = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
-                `,e.exports.jsx(s.span,{className:"hljs-attr",children:"command"}),`
-                    = (Default) = Command2
-            `,e.exports.jsx(s.span,{className:"hljs-attr",children:"SUBGROUP_REG_KEY"}),`
-                = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"MUIVerb"}),` = Subgroup name
-                = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
-                = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Subcommands"}),` =
-                Shell
-                    `,e.exports.jsx(s.span,{className:"hljs-attr",children:"ITEM1_REG_KEY"}),`
-                        = (Default) = Name of the `,e.exports.jsx(s.span,{className:"hljs-attr",children:"item1"}),`
-                        = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
-                        `,e.exports.jsx(s.span,{className:"hljs-attr",children:"command"}),`
-                            = (Default) = Command1
-                    ...
-            ...
+          `,e.exports.jsx(s.span,{className:"hljs-attr",children:"ITEM1_REG_KEY"}),`
+            = (Default) = Name of the `,e.exports.jsx(s.span,{className:"hljs-attr",children:"item1"}),`
+            = `,e.exports.jsx(s.span,{className:"hljs-attr",children:"Icon"}),` = Path to an icon
+            `,e.exports.jsx(s.span,{className:"hljs-attr",children:"command"}),`
+              = (Default) = Command1
+          ...
+      ...
 `]})}),`
 `,e.exports.jsxs(s.h2,{id:"implementation",children:["Implementation",e.exports.jsx(s.a,{"aria-hidden":"true",tabIndex:"-1",href:"#implementation",children:e.exports.jsx(s.span,{className:"icon icon-link"})})]}),`
 `,e.exports.jsxs(s.h3,{id:"test-implementation",children:["Test implementation",e.exports.jsx(s.a,{"aria-hidden":"true",tabIndex:"-1",href:"#test-implementation",children:e.exports.jsx(s.span,{className:"icon icon-link"})})]}),`
@@ -147,9 +147,9 @@ CloseKey(group_reg_key)
 see the following structure corresponding to the context menu group we've
 created.`]}),`
 `,e.exports.jsx(s.p,{children:e.exports.jsx(s.img,{src:"/images/python/contextmenu/3.png",alt:""})}),`
-`,e.exports.jsx(s.p,{children:`Congratulations, :smiley: :clap: :star2: we did it. The complete test script can
-be found at`}),`
-`,e.exports.jsx("a",{href:"https://gist.github.com/naninaveen/124fa967557d0719781bea129f278412",target:"_blank",rel:"noopener noreferrer",children:e.exports.jsx(s.p,{children:"this link"})}),`
+`,e.exports.jsx(s.p,{children:`Congratulations, \u{1F603} \u{1F44F} \u{1F31F} we did it. Run the complete test script
+from the gist.`}),`
+`,e.exports.jsx("a",{href:"https://gist.github.com/naninaveen/124fa967557d0719781bea129f278412",target:"\\_blank",rel:"noopener noreferrer",children:e.exports.jsx(s.p,{children:"https://gist.github.com/naninaveen/124fa967557d0719781bea129f278412"})}),`
 `,e.exports.jsxs(s.h3,{id:"general-purpose-implementation",children:["General purpose implementation",e.exports.jsx(s.a,{"aria-hidden":"true",tabIndex:"-1",href:"#general-purpose-implementation",children:e.exports.jsx(s.span,{className:"icon icon-link"})})]}),`
 `,e.exports.jsxs(s.p,{children:[`For adding the groups and menu items to the context menu, first let us define
 two classes `,e.exports.jsx(s.code,{children:"ContextMenuItem"})," and ",e.exports.jsx(s.code,{children:"ContextMenuGroup"}),` for representing a menu
@@ -241,18 +241,13 @@ the functions are taken from the test implementation.`]}),`
 )
 create_group(user_key, group1)
 `]})}),`
-`,e.exports.jsx(s.p,{children:"Great, that's a nice nested context menu groups with items."}),`
-`,e.exports.jsx("br",{}),`
-`,e.exports.jsx(s.p,{children:e.exports.jsx(s.img,{src:"/images/python/contextmenu/4.png",alt:""})}),`
+`,e.exports.jsxs(s.p,{children:[`Great, that's a nice nested context menu groups with items.
+`,e.exports.jsx(s.img,{src:"/images/python/contextmenu/4.png",alt:""})]}),`
 `,e.exports.jsx(s.p,{children:`But wait, you haven't told me about how I can remove them and how I can add
 python scripts?`}),`
-`,e.exports.jsx("h1",{className:"no_toc",children:e.exports.jsx("center",{children:e.exports.jsx("a",{href:"https://github.com/naveennamani/pywin-contextmenu",target:"_blank",rel:"noopener noreferrer",className:"no-underline",children:e.exports.jsxs(s.p,{children:["\xAF\\",e.exports.jsx(s.em,{children:"(\u30C4)"}),"/\xAF"]})})})}),`
-`,e.exports.jsx(s.hr,{}),`
+`,e.exports.jsx("center",{children:e.exports.jsx("a",{href:"https://github.com/naveennamani/pywin_contextmenu",target:"_blank",rel:"noopener noreferrer",className:"no-underline",children:e.exports.jsxs(s.p,{children:["\xAF\\",e.exports.jsx(s.em,{children:"(\u30C4)"}),"/\xAF"]})})}),`
 `,e.exports.jsx(s.hr,{}),`
 `,e.exports.jsxs(s.p,{children:[`This post is a note to myself during the development of a pypi package. Please
-checkout the pypi package `,e.exports.jsx(s.a,{href:"https://pypi.org/project/pywin-contextmenu/",children:"here"}),`
-and the source code `,e.exports.jsx(s.a,{href:"https://github.com/naveennamani/pywin_contextmenu",children:"here"}),"."]}),`
-`,e.exports.jsx(s.hr,{}),`
-`,e.exports.jsx("h4",{className:"no_toc",style:{color:"red"},children:e.exports.jsx(s.p,{children:"There is happiness in doing random things at random times with random people."})}),`
-`,e.exports.jsx("h1",{className:"no_toc",children:"\xA9 Naveen Namani"}),`
-`,e.exports.jsx(s.hr,{})]})}}export{i as default,l as metaData};
+checkout the `,e.exports.jsx(s.a,{href:"https://pypi.org/project/pywin-contextmenu/",children:"pypi package"}),` and the
+`,e.exports.jsx(s.a,{href:"https://github.com/naveennamani/pywin_contextmenu",children:"source code"}),"."]}),`
+`,e.exports.jsx("h4",{style:{color:"red"},children:e.exports.jsx(s.p,{children:"There is happiness in doing random things at random times with random people."})})]})}}export{i as default,l as metaData};
