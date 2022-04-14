@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://naveennamani.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://naveennamani.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://naveennamani.github.io/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="google-site-verification" content="lMAcWSuIpU59ZTCmR2EJSITknLE5T6pJZCdbWhpImo4"/>
+    <title data-react-helmet="true">Using vite-plugin-ssr with mdx-js, solving ESM only library problems, understanding vite configuration and writing vite plugins</title>
+    <meta data-react-helmet="true" name="description" content="Some debugging sessions take longer than you imagine. What makes it awesome at the end is what you learn from it."/><meta data-react-helmet="true" name="image" content="/images/2022/04/error.png"/><meta data-react-helmet="true" property="og:type" content="article"/><meta data-react-helmet="true" property="article:published_time" content="Fri Apr 01 2022 00:00:00 GMT+0000 (Coordinated Universal Time)"/><meta data-react-helmet="true" property="article:modified_time" content="Fri Apr 01 2022 00:00:00 GMT+0000 (Coordinated Universal Time)"/><meta data-react-helmet="true" property="og:locale" content="en-US"/><meta data-react-helmet="true" property="og:title" content="Using vite-plugin-ssr with mdx-js, solving ESM only library problems, understanding vite configuration and writing vite plugins"/><meta data-react-helmet="true" property="og:description" content="Some debugging sessions take longer than you imagine. What makes it awesome at the end is what you learn from it."/><meta data-react-helmet="true" property="og:image" content="/images/2022/04/error.png"/><meta data-react-helmet="true" property="og:image:alt" content="An error"/><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/><meta data-react-helmet="true" name="twitter:title" content="Using vite-plugin-ssr with mdx-js, solving ESM only library problems, understanding vite configuration and writing vite plugins"/><meta data-react-helmet="true" name="twitter:description" content="Some debugging sessions take longer than you imagine. What makes it awesome at the end is what you learn from it."/><meta data-react-helmet="true" name="twitter:image" content="/images/2022/04/error.png"/><meta data-react-helmet="true" name="twitter:image:alt" content="An error"/>
+    
+    
+    <script data-react-helmet="true" type="application/ld+json">[{"@context":"http://schema.org","@type":"WebPage","datePublished":"2022-04-01T00:00:00.000Z","description":"Some debugging sessions take longer than you imagine. What makes it awesome at the end is what you learn from it.","image":"/images/2022/04/error.png","inLanguage":"en-US","name":"Using vite-plugin-ssr with mdx-js, solving ESM only library problems, understanding vite configuration and writing vite plugins","author":{"@type":"Person","name":"Naveen Namani"}},{"@context":"http://schema.org","@type":"BlogPosting","name":"Using vite-plugin-ssr with mdx-js, solving ESM only library problems, understanding vite configuration and writing vite plugins","headline":"Using vite-plugin-ssr with mdx-js, solving ESM only library problems, understanding vite configuration and writing vite plugins","keywords":["webdev","javascript","vite","react"],"description":"Some debugging sessions take longer than you imagine. What makes it awesome at the end is what you learn from it.","author":{"@type":"Person","name":"Naveen Namani"},"publisher":{"@context":"http://schema.org","@type":"Organization","name":"Random Programming Stuff","url":"https://naveennamani.github.io/blog","logo":"/images/naveennamani.jpg"},"mainEntityOfPage":{"@type":"WebPage"},"image":"/images/2022/04/error.png","datePublished":"2022-04-01T00:00:00.000Z","dateModified":"2022-04-01T00:00:00.000Z"}]</script>
+    
+  <link rel="stylesheet" type="text/css" href="/assets/renderer/_default.page.client.tsx.1dba1acc.css"></head>
+  <body >
+      <div id="page-view"><header class="mb-5 w-full bg-primary p-5 text-primary-content shadow-md shadow-primary"><a href="#content" class="fixed top-2 -left-full bg-base-100 p-2 font-bold text-primary outline-2 outline-primary focus:left-2">Skip to content</a><div class="mx-auto flex max-w-screen-md flex-col md:flex-row md:justify-between"><div class="flex-shrink-0 text-center text-2xl font-bold"><a title="Homepage" href="/" class="inline-block align-middle uppercase outline-primary-content">Naveen Namani</a></div><nav class="mt-4 flex flex-wrap justify-center space-x-1 self-center border-y-2 border-primary-content md:mt-0"><a href="/" class="link-hover px-4 py-2">Home</a><a href="/blog" class="link-hover px-4 py-2">Blog</a><a href="/projects" class="link-hover px-4 py-2">Projects</a></nav></div></header><main class="wrapper mb-32 min-h-screen w-full bg-base-100"><div id="content" class="prose mx-auto max-w-screen-md p-4 font-sans prose-p:text-[17px] md:px-0"><article><header><h1 id="top-heading">Using vite-plugin-ssr with mdx-js, solving ESM only library problems, understanding vite configuration and writing vite plugins</h1><p>Some debugging sessions take longer than you imagine. What makes it awesome at the end is what you learn from it.</p><p class="font-bold"><time dateTime="2022-04-01T00:00:00.000Z" itemProp="datePublished">Fri, April 1, 2022</time></p><p><a href="/tag/webdev" class="tag-chip">#webdev</a><a href="/tag/javascript" class="tag-chip">#javascript</a><a href="/tag/vite" class="tag-chip">#vite</a><a href="/tag/react" class="tag-chip">#react</a></p></header><figure><img src="/images/2022/04/error.png" width="1200" height="630" alt="An error" class="bg-primary/20"/></figure><p><a href="https://vite-plugin-ssr.com/">vite-plugin-ssr</a> is vite plugin which allows us
+to build websites with Server Side Rendering (SSR), Client Side Rendering (CSR),
+Single Page Applications (SPA) and Static Site Generation (SSG) all in one. This
+plugin is like Next.js but provides more control over each page and for any of
+your favorite frontend framework. Please visit the website to learn how to use
+this plugin.</p>
+<p>In this tutorial we&#x27;ll learn how to setup mdx-js library for vite project for
+building markdown based websites and to prerender them using vite-plugin-ssr to
+generate static websites.</p>
+<blockquote>
+<p>The vite-plugin-ssr
+<a href="https://github.com/brillout/vite-plugin-ssr/tree/master/examples">github repo</a>
+contains example projects which you can clone and start with. For example
+<a href="https://github.com/brillout/vite-plugin-ssr/tree/master/examples/react-full">react-full example</a>
+already provides a setup for working with mdx-js library. The intention of
+this tutorial is to show how to solve some of the problems I encountered while
+using the mdx-js library and vite-plugin-ssr prerender feature.</p>
+</blockquote>
+<h2 id="project-setup">Project setup<a aria-hidden="true" tabindex="-1" href="#project-setup"><span class="icon icon-link"></span></a></h2>
+<p>First of all, we need to setup a vite + vite-plugin-ssr based project. To
+scaffold a vite-plugin-ssr project simply execute</p>
+<pre><code class="hljs language-sh">npm init vite-plugin-ssr
+</code></pre>
+<p>Give your project a name (I named it nn-blog) and select the frontend framework
+(in this example react) you would like to use. Once the command runs simply go
+to your project folder and install all dependencies.</p>
+<pre><code class="hljs language-sh"><span class="hljs-built_in">cd</span> nn-blog
+npm install
+</code></pre>
+<p>Then run the dev server with <code>npm run dev</code>. Congratulations, you&#x27;ve just setup a
+vite + vite-plugin-ssr based project. The setup comes initialized with a git
+repo, so you can start modifying the code around. And you&#x27;ll notice how
+blazingly fast the vite dev server is.</p>
+<p>Once you understand the
+<a href="https://vite-plugin-ssr.com/filesystem-routing">filesystem routing</a> concepts of
+vite-plugin-ssr, create some pages and experiment. When you&#x27;re ready let&#x27;s start
+with adding mdx-js.</p>
+<h2 id="adding-mdx-js-to-vite-project">Adding mdx-js to vite project<a aria-hidden="true" tabindex="-1" href="#adding-mdx-js-to-vite-project"><span class="icon icon-link"></span></a></h2>
+<p>mdx-js is a library which converts markdown content to jsx compatible content
+that you can then use with your jsx based libraries such as react, preact, vue.</p>
+<blockquote>
+<p>MDX allows you to use JSX in your markdown content. You can import components,
+such as interactive charts or alerts, and embed them within your content. vite
+uses rollup under the hood to build bundles for production. So for installing
+mdx-js to a vite project, we should use <code>@mdx-js/rollup</code> and for handling
+custom MDX components we can use <code>@mdx-js/react</code> for react based projects.</p>
+</blockquote>
+<pre><code class="hljs language-sh">npm install @mdx-js/rollup @mdx-js/react
+</code></pre>
+<p>Once the libraries are installed, add mdx-js to vite plugins in <code>vite.config.js</code>
+file and config the mdx plugin to use @mdx-js/react as an proiderImportSource.</p>
+<pre><code class="hljs language-diff">import react from &#x27;@vitejs/plugin-react&#x27;
+import ssr from &#x27;vite-plugin-ssr/plugin&#x27;
+<span class="hljs-addition">+import mdx from &quot;@mdx-js/rollup&quot;</span>
+
+export default {
+<span class="hljs-deletion">- plugins: [react(), ssr()]</span>
+<span class="hljs-addition">+ plugins: [react(), mdx({</span>
+<span class="hljs-addition">+   providerImportSource: &quot;@mdx-js/react&quot;</span>
+<span class="hljs-addition">+ }), ssr()],</span>
+}
+</code></pre>
+<h2 id="solving-problem-1---require-of-es-module-is-not-supported">Solving problem 1 - require() of ES Module is not supported<a aria-hidden="true" tabindex="-1" href="#solving-problem-1---require-of-es-module-is-not-supported"><span class="icon icon-link"></span></a></h2>
+<p>Now after updating the <code>vite.config.js</code> if we try to run <code>npm run dev</code> we&#x27;ll be
+given this confusing error</p>
+<pre><code class="hljs language-lua">failed to <span class="hljs-built_in">load</span> <span class="hljs-built_in">config</span> from /workspace/example/nn-blog/vite.<span class="hljs-built_in">config</span>.js
+/workspace/example/nn-blog/vite.<span class="hljs-built_in">config</span>.js:<span class="hljs-number">61509</span>
+undefined
+            ^
+
+Error [ERR_REQUIRE_ESM]: <span class="hljs-built_in">require</span>() of ES Module /workspace/example/nn-blog/node_modules/@mdx-js/rollup/index.js from /workspace/example/nn-blog/vite.<span class="hljs-built_in">config</span>.js <span class="hljs-keyword">not</span> supported.
+</code></pre>
+<p>This problems occurs in the following order.</p>
+<ul>
+<li><code>npm run dev</code> runs <code>node ./server/index.js</code> file which is a commonjs file</li>
+<li>The script creates vite dev server using <code>vite.createServer</code></li>
+<li>The vite dev server converts <code>vite.config.js</code> to CJS module first and then
+loads the config from this file.</li>
+<li>As CJS module tries to <code>require(&quot;@mdx-js/rollup&quot;)</code> plugin which is a ESM only
+module the error will be generated.</li>
+</ul>
+<p>To solve this problem, we should inform vite to skip building config file to
+CJS. This can be achieved by adding</p>
+<pre><code class="hljs language-diff"><span class="hljs-addition">+ &quot;type&quot;: &quot;module&quot;,</span>
+}
+</code></pre>
+<p>to <code>package.json</code> file.</p>
+<h2 id="solving-problem-2---require-is-not-defined-in-es-module-scope">Solving problem 2 - require() is not defined in ES module scope<a aria-hidden="true" tabindex="-1" href="#solving-problem-2---require-is-not-defined-in-es-module-scope"><span class="icon icon-link"></span></a></h2>
+<p>Once we inform node to enable ES modules, we cannot use <code>require</code> syntax in
+<code>.js</code> files. This is exactly what you&#x27;ll get when you run <code>npm run dev</code></p>
+<pre><code class="hljs language-javascript"><span class="hljs-attr">file</span>:<span class="hljs-comment">///workspace/example/nn-blog/server/index.js:1</span>
+<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>)
+                ^
+
+<span class="hljs-title class_">ReferenceError</span>: <span class="hljs-built_in">require</span> is not defined <span class="hljs-keyword">in</span> <span class="hljs-variable constant_">ES</span> <span class="hljs-variable language_">module</span> scope, you can use <span class="hljs-keyword">import</span> instead
+<span class="hljs-title class_">This</span> file is being treated <span class="hljs-keyword">as</span> an <span class="hljs-variable constant_">ES</span> <span class="hljs-variable language_">module</span> because it has a <span class="hljs-string">&#x27;.js&#x27;</span> file extension and <span class="hljs-string">&#x27;/workspace/example/nn-blog/package.json&#x27;</span> contains <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;module&quot;</span>. <span class="hljs-title class_">To</span> treat it <span class="hljs-keyword">as</span> a <span class="hljs-title class_">CommonJS</span> script, rename it to use the <span class="hljs-string">&#x27;.cjs&#x27;</span> file extension.
+</code></pre>
+<p>Luckily, the error itself gave us a solution. But you need to first stop
+scratching your head and learn to read those lines in to identify the solution.
+If you look carefully what we need is just to rename our <code>index.js</code> file to
+<code>index.cjs</code> and 💣</p>
+<h2 id="solving-problem-3---cannot-find-module">Solving problem 3 - Cannot find module<a aria-hidden="true" tabindex="-1" href="#solving-problem-3---cannot-find-module"><span class="icon icon-link"></span></a></h2>
+<pre><code class="hljs language-vbnet"><span class="hljs-symbol">node:</span>internal/modules/cjs/loader:<span class="hljs-number">936</span>
+  <span class="hljs-keyword">throw</span> err;
+  ^
+
+<span class="hljs-symbol">Error:</span> Cannot find <span class="hljs-keyword">module</span> <span class="hljs-comment">&#x27;/workspace/example/nn-blog/server&#x27;</span>
+    at <span class="hljs-keyword">Function</span>.<span class="hljs-keyword">Module</span>._resolveFilename (node:internal/modules/cjs/loader:<span class="hljs-number">933</span>:<span class="hljs-number">15</span>)
+    at <span class="hljs-keyword">Function</span>.<span class="hljs-keyword">Module</span>._load (node:internal/modules/cjs/loader:<span class="hljs-number">778</span>:<span class="hljs-number">27</span>)
+    at <span class="hljs-keyword">Function</span>.executeUserEntryPoint [<span class="hljs-keyword">as</span> runMain] (node:internal/modules/run_main:<span class="hljs-number">81</span>:<span class="hljs-number">12</span>)
+    at node:internal/main/run_main_module:<span class="hljs-number">17</span>:<span class="hljs-number">47</span> {
+  code: <span class="hljs-comment">&#x27;MODULE_NOT_FOUND&#x27;,</span>
+  requireStack: []
+}
+</code></pre>
+<p>Wait, where is our file gone? Node says it can&#x27;t find it, but it&#x27;s there right
+in the server folder.</p>
+<p>May be if you&#x27;re patient enough or highly talented nerd enough, you&#x27;ll
+understand that node is trying to load <code>server</code> module and not
+<code>server/index.js</code>. The <code>/index.js</code> file comes into picture as part of the
+<a href="https://nodejs.org/docs/latest-v13.x/api/modules.html">CJS module loading sequence of node</a>.
+So, we need to add a <code>package.json</code> file with the following value</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;main&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;index.cjs&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>And ✨ congratulations, you are now ready to go.</p>
+<h2 id="adding-a-markdown-page">Adding a markdown page<a aria-hidden="true" tabindex="-1" href="#adding-a-markdown-page"><span class="icon icon-link"></span></a></h2>
+<p>Now go to pages directory and any markdown content with <code>.md</code> or <code>.mdx</code>
+extention. For example, for creating a <code>/naveennamani</code> root, add
+<code>pages/naveennamani.page.mdx</code> or <code>pages/naveennamani/index.page.mdx</code> or
+<code>pages/index/naveennamani.page.mdx</code> file. (I prefer the last filename for this
+example).</p>
+<p>Once you create the file add any markdown content, hit
+<code>localhost:3000/naveennamani</code> url to see your markdown content getting converted
+into html. For using react components inside your mdx files simply import them
+and use.</p>
+<pre><code class="hljs language-md"><span class="hljs-section"># Hello world</span>
+
+import { Counter } from &quot;./Counter&quot;;
+
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Counter</span> /&gt;</span></span>
+</code></pre>
+<p>This will show a heading with an interactive counter that is also shown on home
+page.</p>
+<h2 id="prerendering-and-inventing-new-problems">Prerendering and inventing new problems<a aria-hidden="true" tabindex="-1" href="#prerendering-and-inventing-new-problems"><span class="icon icon-link"></span></a></h2>
+<p>When you stop the dev server and want to build your awesome website as a static
+content, you can use vite-plugin-ssr prerender feature. Just add the following
+script to <code>package.json</code></p>
+<pre><code class="hljs language-json"><span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+   ...
+   <span class="hljs-attr">&quot;prerender&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run build &amp;&amp; vite-plugin-ssr prerender&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>Now when you run <code>npm run prerender</code>, you&#x27;ll see that <code>dist\client</code> and
+<code>dist\server</code> folders are created and build files are populated there. But
+prerendering is failing with</p>
+<pre><code class="hljs language-typescript">/workspace/example/nn-blog/dist/server/assets/naveennamani.<span class="hljs-property">page</span><span class="hljs-number">.04918628</span>.<span class="hljs-property">js</span>:<span class="hljs-number">4</span>
+<span class="hljs-keyword">var</span> react = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;@mdx-js/react&quot;</span>);
+            ^
+
+<span class="hljs-title class_">Error</span> [<span class="hljs-variable constant_">ERR_REQUIRE_ESM</span>]: <span class="hljs-built_in">require</span>() <span class="hljs-keyword">of</span> <span class="hljs-variable constant_">ES</span> <span class="hljs-title class_">Module</span> /workspace/example/nn-blog/node_modules/<span class="hljs-meta">@mdx</span>-js/react/index.<span class="hljs-property">js</span> <span class="hljs-keyword">from</span> /workspace/example/nn-blog/dist/server/assets/naveennamani.<span class="hljs-property">page</span><span class="hljs-number">.04918628</span>.<span class="hljs-property">js</span> not supported.
+</code></pre>
+<p>Isn&#x27;t that the same problem we solved earlier? Yes. But why again? 😢 This
+time the problem is created in the following order.</p>
+<ul>
+<li>When you run <code>npm run build</code> it runs <code>vite build</code> and <code>vite build --ssr</code> with
+the first command building assets for <code>dist\client</code> and second command for
+<code>dist\server</code>.</li>
+<li>While <code>dist\client</code> assets are all <code>esm</code> modules, <code>dist\client</code> build output
+are <code>cjs</code> modules.</li>
+<li>So, again <code>@mdx-js/react</code> which is a ESM only module is failed to import
+through <code>require</code>.</li>
+</ul>
+<p>This time, we can generate ES modules instead of CJS modules by configuring
+build options in <code>vite.config.js</code> as follows</p>
+<pre><code class="hljs language-diff">  import react from &#x27;@vitejs/plugin-react&#x27;
+  import ssr from &#x27;vite-plugin-ssr/plugin&#x27;
+  import mdx from &quot;@mdx-js/rollup&quot;
+<span class="hljs-addition">+ import { defineConfig } from &#x27;vite&#x27;</span>
+
+<span class="hljs-addition">+ export default defineConfig({</span>
+    plugins: [react(), mdx({
+      providerImportSource: &quot;@mdx-js/react&quot;
+    }), ssr()],
+<span class="hljs-addition">+   build: {</span>
+<span class="hljs-addition">+     rollupOptions: {</span>
+<span class="hljs-addition">+       output: {</span>
+<span class="hljs-addition">+         format: &quot;es&quot;</span>
+<span class="hljs-addition">+       }</span>
+<span class="hljs-addition">+     }</span>
+<span class="hljs-addition">+   }</span>
+<span class="hljs-addition">+ })</span>
+
+</code></pre>
+<p>When you run <code>npm run prerender</code> again, you can see that <code>dist\server</code> folder
+contains files which are ES modules. But you still get this complicated error.</p>
+<pre><code class="hljs language-javascript"><span class="hljs-title class_">Error</span> [<span class="hljs-variable constant_">ERR_MODULE_NOT_FOUND</span>]: <span class="hljs-title class_">Cannot</span> find <span class="hljs-variable language_">module</span> <span class="hljs-string">&#x27;/workspace/example/nn-blog/node_modules/react/jsx-runtime.js&#x27;</span> imported <span class="hljs-keyword">from</span> /workspace/example/nn-blog/dist/server/assets/index.<span class="hljs-property">page</span>.0262694b.<span class="hljs-property">js</span>
+<span class="hljs-title class_">Did</span> you mean to <span class="hljs-keyword">import</span> react/jsx-runtime.js.<span class="hljs-property">js</span>?
+</code></pre>
+<h2 id="writing-a-vite-plugin-to-solve-our-problems">Writing a vite plugin to solve our problems<a aria-hidden="true" tabindex="-1" href="#writing-a-vite-plugin-to-solve-our-problems"><span class="icon icon-link"></span></a></h2>
+<p>At first sight, the error seems like a spelling mistake. But if you google,
+there is a
+<a href="https://github.com/facebook/react/issues/20235">long list of comments</a> in the
+official react repo (issue #20235). The problem can be simply solved by adding
+.js extension to the import, but how to do that automatically?</p>
+<p>Let&#x27;s write a vite plugin to do that for us. Writing a vite plugin is very
+simple if you follow the <a href="https://vitejs.dev/guide/api-plugin">Vite plugin API</a>.</p>
+<p>This is what I come with.</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">fix_ssr_esm_modules</span>(<span class="hljs-params">replacements</span>) {
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">transform</span>(<span class="hljs-params">code, id, ssr</span>) {
+    <span class="hljs-keyword">if</span> (ssr)
+      <span class="hljs-comment">// ssr is true when `vite build --ssr` is run</span>
+      <span class="hljs-keyword">return</span> replacements.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">prevCode, { find, replacement }</span>) =&gt;</span> {
+        <span class="hljs-keyword">return</span> prevCode.<span class="hljs-title function_">replaceAll</span>(find, replacement);
+      }, code);
+  }
+
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-comment">// configuration of our plugin used by vite</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;vite-plugin-fix-ssr-esm-modules&quot;</span>,
+    <span class="hljs-attr">apply</span>: <span class="hljs-string">&quot;build&quot;</span>, <span class="hljs-comment">// execute only for build tasks</span>
+    <span class="hljs-attr">enforce</span>: <span class="hljs-string">&quot;post&quot;</span>, <span class="hljs-comment">// execute after build finished</span>
+    <span class="hljs-attr">transform</span>: transform <span class="hljs-comment">// transformation function that returns transformed code</span>
+  };
+}
+</code></pre>
+<p>Now place the code in fix_ssr_esm_modules.js file and then import and use this
+plugin in <code>vite.config.js</code> file as follows.</p>
+<pre><code class="hljs language-diff"><span class="hljs-addition">+ import fix_ssr_esm_modules from &quot;./fix_ssr_esm_imports.js&quot;;</span>
+
+export default defineConfig({
+  plugins: [
+    react(),
+    mdx({
+      providerImportSource: &quot;@mdx-js/react&quot;,
+    }),
+    ssr(),
+<span class="hljs-addition">+   fix_ssr_esm_modules([</span>
+<span class="hljs-addition">+     { find: &quot;react/jsx-runtime.js&quot;, replacement: &quot;react/jsx-runtime.js.js&quot; },</span>
+<span class="hljs-addition">+     { find: &quot;react-dom/server.js&quot;, replacement: &quot;react-dom/server.js.js&quot; },</span>
+<span class="hljs-addition">+   ]),</span>
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        format: &quot;es&quot;,
+      },
+    },
+  },
+});
+</code></pre>
+<p>The plugin transforms the build files and replaces the import as given as
+options to the plugin.</p>
+<p>Now you can run <code>npm run prerender</code> and serve the files in <code>dist\client</code>
+statically using <code>npx serve</code>. Congratulations 🌟, you just built a static
+site using vite-plugin-ssr.</p>
+<h2 id="final-touch">Final touch<a aria-hidden="true" tabindex="-1" href="#final-touch"><span class="icon icon-link"></span></a></h2>
+<p>The final version of the source code of the project is available in github
+<a href="https://github.com/naveennamani/vite-ssr-mdx">naveennamani/vite-ssr-mdx</a>.</p>
+<blockquote>
+<p>There is a small inconsistency with <code>server/index.js</code> file, but that&#x27;s an
+alternative I found while I&#x27;m writing this article.</p>
+</blockquote>
+<p>Sorry for the long post, if you come here after all, here is a potato for you.</p>
+<center><p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/uo9nvf5zpvlr2csi64kw.jpg" alt="Potato"/></p></center></article></div></main><div class="text-base-300-content fixed bottom-0 -z-10 flex h-32 w-full flex-col items-center justify-center bg-base-300 p-5"><p class="text-center text-xl font-bold">© Naveen Namani | 2022</p><div class="text-3xl"><a href="https://github.com/naveennamani" title="Github" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svgicon" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg></a><a href="https://t.me/naveennamani" title="telegram" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svgicon" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"></path></svg></a></div></div></div>
+  <script type="module" src="/assets/renderer/_default.page.client.tsx.ee3cf7ea.js"></script><script id="vite-plugin-ssr_pageContext" type="application/json">{"pageContext":{"_pageId":"/pages/blog/2022/04/vite-plugin-ssr-esm-problems","pageProps":"!undefined","url":"/blog/2022/04/vite-plugin-ssr-esm-problems","pageContext":"!undefined","layoutName":"blog","metaData":"!undefined","relatedPostsData":[]}}</script></body>
+</html>
