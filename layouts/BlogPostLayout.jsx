@@ -1,5 +1,6 @@
 import React from "react";
 
+import BlogPostCard from "@components/BlogPostCard";
 import NavBar from "@components/NavBar";
 import Footer from "@components/Footer";
 import usePageContext from "@hooks/usePageContext";
@@ -57,7 +58,7 @@ function ArticleHeader() {
 }
 
 export function BlogPostLayout({ children }) {
-  const { url } = usePageContext();
+  const { url, relatedPostsData } = usePageContext();
   return (
     <>
       <NavBar currentURL={url} />
@@ -70,6 +71,23 @@ export function BlogPostLayout({ children }) {
             <ArticleHeader />
             {children}
           </article>
+          {relatedPostsData.length > 0 && (
+            <>
+              <hr className="border-4" />
+              <aside>
+                <h2>Related articles:</h2>
+                {relatedPostsData.map(
+                  ({ filesystemRoute, metaData: { blogPost } }, index) => (
+                    <BlogPostCard
+                      key={index}
+                      blogPost={blogPost}
+                      href={filesystemRoute}
+                    />
+                  )
+                )}
+              </aside>
+            </>
+          )}
         </div>
       </main>
       <Footer />

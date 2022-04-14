@@ -1,0 +1,106 @@
+---
+blogPost:
+  title: Generate offline documentation of reactjs in 5 minutes
+  description:
+    Learn how to generate reactjs documentation by understanding the repo and
+    the scripts
+  image: "/images/2021/10/react/homepage.png"
+  imageAlt: reactjs.org homepage
+  datePublished: 2021-10-09
+  dateModified: 2022-04-14
+  tags:
+    - reactjs
+    - javascript
+    - tutorial
+    - offline-documentation
+    - npm
+relatedArticles:
+  - /blog/2021/10/offline-documentation-of-tailwindcss-in-5-easy-steps
+---
+
+When it comes to learning a new language, framework or library, the first and
+important source of help comes from the documentation provided by the official
+websites. But it is often difficult to go through the complete documentation
+immediately. And during development we need to refer to the documentation very
+frequently.
+
+Having an offline version of the documentation may help to find the information
+faster and whenever required. Also, it helps to work offline without any
+distractions from the facebook notifications.
+
+In this post, let's build the offline documentation for reactjs.
+
+## Getting the source code
+
+The documentation for reactjs is available on [reactjs.org](https://reactjs.org)
+website. The source code for this website is available as a
+[github repository](https://github.com/reactjs/reactjs.org).
+
+Fireup a cmd, clone this repository and cd into the directory
+
+```bash
+git clone https://github.com/reactjs/reactjs.org
+cd reactjs.org
+```
+
+Open the code editor of your choice. If using vscode, just enter
+
+```bash
+code .
+```
+
+## Understanding the tech stack
+
+Once we have the source code, we can see many configuration files there. The
+most important ones that quickly gives us all the information we need are
+
+1. `gatsby-*.js` - these files tells us that [Gatsby](https://www.gatsbyjs.com)
+   is used for generating the static HTML for the website.
+1. `yarn.lock` - it is using yarn as the package manager.
+1. `vercel.json` - the website is hosted on [vercel](https://vercel.com)
+
+## package.json
+
+Perhaps, `package.json` is the one file that any webdev will start looking at
+when they start working on a new project. Once we open this file, we can see the
+dependencies of the projects and the scripts used.
+
+From the file we can see the following scripts.
+
+![Scripts in package.json file](/images/2021/10/react/package.json_scripts.png)
+
+Luckily, we have the **build** script that we require to build the static HTML.
+
+## Commands
+
+Now we have enough information to generate the documentation.
+
+1. Install all the dependencies using the `yarn` package manager.
+
+   ```bash
+   yarn install
+   ```
+
+1. Run the build script using
+
+   ```bash
+   yarn build
+   ```
+
+   This will generate the required static HTML, js, css and all assets in the
+   **public** folder.
+
+1. Serve the documentation generated in **public** folder
+
+   ```sh
+   cd public
+   python -m http.server # simpler
+   # Or if you prefer nodejs
+   yarn add global serve
+   serve
+   ```
+
+**Congratulations!** :clap: :bouquet: We now have reactjs documentation
+available offline.
+
+<h3 className="text-center">**Happy coding!**</h3>

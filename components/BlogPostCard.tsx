@@ -26,7 +26,7 @@ export function BlogPostCard({
       className="group mb-2 bg-cover"
       style={{ backgroundImage: "url(" + image + ")" }}
     >
-      <article className="bg-primary/70 p-5 text-primary-content shadow-md shadow-primary drop-shadow-2xl">
+      <article className="bg-primary/80 p-5 text-primary-content shadow-md shadow-primary drop-shadow-2xl">
         <a href={href} className="text-primary-content no-underline">
           <h1 className="text-xl text-primary-content">{title}</h1>
           <Time dt={datePublished} />

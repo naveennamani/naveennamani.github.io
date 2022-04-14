@@ -1,0 +1,160 @@
+---
+blogPost:
+  title: Offline documentation of tailwindcss in 5 easy steps
+  description:
+    Learn how to generate tailwindcss documentation by understanding the repo
+    and the scripts
+  image: "/images/2021/10/tailwindcss/homepage.png"
+  imageAlt: tailwindcss.com homepage
+  datePublished: 2021-10-10
+  dateModified: 2022-04-14
+  tags:
+    - tailwindcss
+    - tutorial
+    - offline-documentation
+    - npm
+relatedArticles:
+  - /blog/2021/10/generate_offline_documentation_of_reactjs
+---
+
+In this post, let's build the offline documentation for **tailwindcss**, my
+favorite utility first CSS framework, and my go to CSS framework for rapidly
+prototyping a design.
+
+## Getting the source code
+
+The documentation for tailwindcss is available on
+[tailwindcss.com](https://tailwindcss.com) website. We can easily find the
+source code for this website on github through a simple google search. It is
+hosted on github at
+[https://github.com/tailwindlabs/tailwindcss.com](https://github.com/tailwindlabs/tailwindcss.com).
+
+Let us first download the source code and inspect.
+
+```bash
+git clone https://github.com/tailwindlabs/tailwindcss.com
+cd tailwindcss.com
+```
+
+Open the code editor of your choice. If using vscode, just enter
+
+```bash
+code .
+```
+
+## Understanding the tech stack
+
+If we look at the files in the root directory, we can understand that
+
+1. `next.config.js` - The website is written in nextjs
+1. `tailwind.config.js` - The website is build using tailwindcss as the CSS
+   framework (what else you expect?)
+1. `yarn.lock` - using yarn as the package manager
+
+For understanding the deployment process of nextjs, we can simply go to its
+corresponding documentation website. You can find the information in below
+links.
+
+1. [Deployment | Next.js](https://nextjs.org/docs/deployment)
+1. [Advanced features: Static HTML Export | Next.js](https://nextjs.org/docs/advanced-features/static-html-export)
+
+## package.json
+
+Once you gain enough info on how deployment works, let's open `package.json`
+file and see if we have the required scripts already present. Luckily, we have
+the script **export** for generating static files. Our life has been made easier
+already.
+
+![Scripts in package.json file](/images/2021/10/tailwindcss/packagejson_scripts.png)
+
+## Commands
+
+Now we have enough information to generate the documentation.
+
+1. Install all the dependencies using the `yarn` package manager.
+
+   ```bash
+   yarn install
+   ```
+
+1. Run the build script using
+
+   ```bash
+   yarn export
+   ```
+
+   This will generate the required static HTML, js, css and all assets in the
+   **out** folder.
+
+1. Serve the documentation generated in **out** folder
+
+   ```sh
+   cd out
+   python -m http.server # simpler
+   # Or if you prefer nodejs
+   yarn global add serve
+   serve
+   ```
+
+**Congratulations!** :clap: :bouquet: We now have tailwindcss documentation
+available offline.
+
+## Pro tip for vscode users
+
+### jsconfig.json
+
+If you have the following directory structure
+
+```
+Home
+\- components
+   |- A.js
+   |- B.js
+
+utils
+\- utils.js
+```
+
+and want to import `utils.js` in `A.js`, you need to use relative paths as
+follows
+
+```js
+import utils from "../../utils/utils.js";
+```
+
+This makes it harder to follow the file being imported, and once you have a
+folder structure 3 or more levels deep, this makes it even harder to write the
+required imports keeping in mind all the folders.
+
+**jsconfig.json** to the rescue!
+
+You can use "compilerOptions" > "paths" dictionary to define the path mappings
+relative to the root of the project.
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@/utils/*": ["utils/*"],
+      "@/home/*": ["Home/components/*"]
+    }
+  }
+}
+```
+
+Now instead of all those relative paths to import utils, you can simply use
+
+```js
+import utils from "@/utils/utils.js";
+```
+
+to import the utils, and to import `A.js` in any other file, we can write
+
+```js
+import A from "@/home/A.js";
+```
+
+You can see this `jsconfig.json` file being used in the `tailwindcss.com`
+project. Go inspect the source code and have fun learning new things.
+
+<h3 className="text-center">**Happy coding!**</h3>

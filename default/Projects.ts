@@ -1,8 +1,9 @@
 export const projects = [
   {
-    name: "naveennamani.github.io/",
+    name: "My personal website",
     repo: "https://github.com/naveennamani/naveennamani.github.io/",
-    description: "This is the source-code of this website",
+    description:
+      "naveennamani.github.io/ This is the source-code of this website",
     tags: ["reactjs", "vite", "vite-plugin-ssr", "SSG", "portfolio", "webdev"],
     links: [
       {

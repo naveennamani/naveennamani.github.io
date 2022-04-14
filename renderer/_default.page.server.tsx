@@ -13,7 +13,8 @@ export const passToClient = [
   "url",
   "pageContext",
   "layoutName",
-  "metaData"
+  "metaData",
+  "relatedPostsData"
 ];
 
 export async function onBeforeRender(pageContext: PageContextServer) {

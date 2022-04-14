@@ -1,0 +1,356 @@
+---
+blogPost:
+  title:
+    Using vite-plugin-ssr with mdx-js, solving ESM only library problems,
+    understanding vite configuration and writing vite plugins
+  description:
+    Some debugging sessions take longer than you imagine. What makes it awesome
+    at the end is what you learn from it.
+  image: "/images/2022/04/error.png"
+  imageAlt: An error
+  datePublished: 2022-04-01
+  dateModified: 2022-04-01
+  tags:
+    - webdev
+    - javascript
+    - vite
+    - react
+---
+
+[vite-plugin-ssr](https://vite-plugin-ssr.com/) is vite plugin which allows us
+to build websites with Server Side Rendering (SSR), Client Side Rendering (CSR),
+Single Page Applications (SPA) and Static Site Generation (SSG) all in one. This
+plugin is like Next.js but provides more control over each page and for any of
+your favorite frontend framework. Please visit the website to learn how to use
+this plugin.
+
+In this tutorial we'll learn how to setup mdx-js library for vite project for
+building markdown based websites and to prerender them using vite-plugin-ssr to
+generate static websites.
+
+> The vite-plugin-ssr
+> [github repo](https://github.com/brillout/vite-plugin-ssr/tree/master/examples)
+> contains example projects which you can clone and start with. For example
+> [react-full example](https://github.com/brillout/vite-plugin-ssr/tree/master/examples/react-full)
+> already provides a setup for working with mdx-js library. The intention of
+> this tutorial is to show how to solve some of the problems I encountered while
+> using the mdx-js library and vite-plugin-ssr prerender feature.
+
+## Project setup
+
+First of all, we need to setup a vite + vite-plugin-ssr based project. To
+scaffold a vite-plugin-ssr project simply execute
+
+```sh
+npm init vite-plugin-ssr
+```
+
+Give your project a name (I named it nn-blog) and select the frontend framework
+(in this example react) you would like to use. Once the command runs simply go
+to your project folder and install all dependencies.
+
+```sh
+cd nn-blog
+npm install
+```
+
+Then run the dev server with `npm run dev`. Congratulations, you've just setup a
+vite + vite-plugin-ssr based project. The setup comes initialized with a git
+repo, so you can start modifying the code around. And you'll notice how
+blazingly fast the vite dev server is.
+
+Once you understand the
+[filesystem routing](https://vite-plugin-ssr.com/filesystem-routing) concepts of
+vite-plugin-ssr, create some pages and experiment. When you're ready let's start
+with adding mdx-js.
+
+## Adding mdx-js to vite project
+
+mdx-js is a library which converts markdown content to jsx compatible content
+that you can then use with your jsx based libraries such as react, preact, vue.
+
+> MDX allows you to use JSX in your markdown content. You can import components,
+> such as interactive charts or alerts, and embed them within your content. vite
+> uses rollup under the hood to build bundles for production. So for installing
+> mdx-js to a vite project, we should use `@mdx-js/rollup` and for handling
+> custom MDX components we can use `@mdx-js/react` for react based projects.
+
+```sh
+npm install @mdx-js/rollup @mdx-js/react
+```
+
+Once the libraries are installed, add mdx-js to vite plugins in `vite.config.js`
+file and config the mdx plugin to use @mdx-js/react as an proiderImportSource.
+
+```diff
+import react from '@vitejs/plugin-react'
+import ssr from 'vite-plugin-ssr/plugin'
++import mdx from "@mdx-js/rollup"
+
+export default {
+- plugins: [react(), ssr()]
++ plugins: [react(), mdx({
++   providerImportSource: "@mdx-js/react"
++ }), ssr()],
+}
+```
+
+## Solving problem 1 - require() of ES Module is not supported
+
+Now after updating the `vite.config.js` if we try to run `npm run dev` we'll be
+given this confusing error
+
+```
+failed to load config from /workspace/example/nn-blog/vite.config.js
+/workspace/example/nn-blog/vite.config.js:61509
+undefined
+            ^
+
+Error [ERR_REQUIRE_ESM]: require() of ES Module /workspace/example/nn-blog/node_modules/@mdx-js/rollup/index.js from /workspace/example/nn-blog/vite.config.js not supported.
+```
+
+This problems occurs in the following order.
+
+- `npm run dev` runs `node ./server/index.js` file which is a commonjs file
+- The script creates vite dev server using `vite.createServer`
+- The vite dev server converts `vite.config.js` to CJS module first and then
+  loads the config from this file.
+- As CJS module tries to `require("@mdx-js/rollup")` plugin which is a ESM only
+  module the error will be generated.
+
+To solve this problem, we should inform vite to skip building config file to
+CJS. This can be achieved by adding
+
+```diff
++ "type": "module",
+}
+```
+
+to `package.json` file.
+
+## Solving problem 2 - require() is not defined in ES module scope
+
+Once we inform node to enable ES modules, we cannot use `require` syntax in
+`.js` files. This is exactly what you'll get when you run `npm run dev`
+
+```
+file:///workspace/example/nn-blog/server/index.js:1
+const express = require('express')
+                ^
+
+ReferenceError: require is not defined in ES module scope, you can use import instead
+This file is being treated as an ES module because it has a '.js' file extension and '/workspace/example/nn-blog/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+```
+
+Luckily, the error itself gave us a solution. But you need to first stop
+scratching your head and learn to read those lines in to identify the solution.
+If you look carefully what we need is just to rename our `index.js` file to
+`index.cjs` and :bomb:
+
+## Solving problem 3 - Cannot find module
+
+```
+node:internal/modules/cjs/loader:936
+  throw err;
+  ^
+
+Error: Cannot find module '/workspace/example/nn-blog/server'
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)
+    at Function.Module._load (node:internal/modules/cjs/loader:778:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at node:internal/main/run_main_module:17:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+```
+
+Wait, where is our file gone? Node says it can't find it, but it's there right
+in the server folder.
+
+May be if you're patient enough or highly talented nerd enough, you'll
+understand that node is trying to load `server` module and not
+`server/index.js`. The `/index.js` file comes into picture as part of the
+[CJS module loading sequence of node](https://nodejs.org/docs/latest-v13.x/api/modules.html).
+So, we need to add a `package.json` file with the following value
+
+```json
+{
+  "main": "index.cjs"
+}
+```
+
+And :sparkles: congratulations, you are now ready to go.
+
+## Adding a markdown page
+
+Now go to pages directory and any markdown content with `.md` or `.mdx`
+extention. For example, for creating a `/naveennamani` root, add
+`pages/naveennamani.page.mdx` or `pages/naveennamani/index.page.mdx` or
+`pages/index/naveennamani.page.mdx` file. (I prefer the last filename for this
+example).
+
+Once you create the file add any markdown content, hit
+`localhost:3000/naveennamani` url to see your markdown content getting converted
+into html. For using react components inside your mdx files simply import them
+and use.
+
+```md
+# Hello world
+
+import { Counter } from "./Counter";
+
+<Counter />
+```
+
+This will show a heading with an interactive counter that is also shown on home
+page.
+
+## Prerendering and inventing new problems
+
+When you stop the dev server and want to build your awesome website as a static
+content, you can use vite-plugin-ssr prerender feature. Just add the following
+script to `package.json`
+
+```
+"scripts": {
+   ...
+   "prerender": "npm run build && vite-plugin-ssr prerender"
+}
+```
+
+Now when you run `npm run prerender`, you'll see that `dist\client` and
+`dist\server` folders are created and build files are populated there. But
+prerendering is failing with
+
+```
+/workspace/example/nn-blog/dist/server/assets/naveennamani.page.04918628.js:4
+var react = require("@mdx-js/react");
+            ^
+
+Error [ERR_REQUIRE_ESM]: require() of ES Module /workspace/example/nn-blog/node_modules/@mdx-js/react/index.js from /workspace/example/nn-blog/dist/server/assets/naveennamani.page.04918628.js not supported.
+```
+
+Isn't that the same problem we solved earlier? Yes. But why again? :cry: This
+time the problem is created in the following order.
+
+- When you run `npm run build` it runs `vite build` and `vite build --ssr` with
+  the first command building assets for `dist\client` and second command for
+  `dist\server`.
+- While `dist\client` assets are all `esm` modules, `dist\client` build output
+  are `cjs` modules.
+- So, again `@mdx-js/react` which is a ESM only module is failed to import
+  through `require`.
+
+This time, we can generate ES modules instead of CJS modules by configuring
+build options in `vite.config.js` as follows
+
+```diff
+  import react from '@vitejs/plugin-react'
+  import ssr from 'vite-plugin-ssr/plugin'
+  import mdx from "@mdx-js/rollup"
++ import { defineConfig } from 'vite'
+
++ export default defineConfig({
+    plugins: [react(), mdx({
+      providerImportSource: "@mdx-js/react"
+    }), ssr()],
++   build: {
++     rollupOptions: {
++       output: {
++         format: "es"
++       }
++     }
++   }
++ })
+
+```
+
+When you run `npm run prerender` again, you can see that `dist\server` folder
+contains files which are ES modules. But you still get this complicated error.
+
+```
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/example/nn-blog/node_modules/react/jsx-runtime' imported from /workspace/example/nn-blog/dist/server/assets/index.page.0262694b.js
+Did you mean to import react/jsx-runtime.js?
+```
+
+## Writing a vite plugin to solve our problems
+
+At first sight, the error seems like a spelling mistake. But if you google,
+there is a
+[long list of comments](https://github.com/facebook/react/issues/20235) in the
+official react repo (issue #20235). The problem can be simply solved by adding
+.js extension to the import, but how to do that automatically?
+
+Let's write a vite plugin to do that for us. Writing a vite plugin is very
+simple if you follow the [Vite plugin API](https://vitejs.dev/guide/api-plugin).
+
+This is what I come with.
+
+```js
+export default function fix_ssr_esm_modules(replacements) {
+  function transform(code, id, ssr) {
+    if (ssr)
+      // ssr is true when `vite build --ssr` is run
+      return replacements.reduce((prevCode, { find, replacement }) => {
+        return prevCode.replaceAll(find, replacement);
+      }, code);
+  }
+
+  return {
+    // configuration of our plugin used by vite
+    name: "vite-plugin-fix-ssr-esm-modules",
+    apply: "build", // execute only for build tasks
+    enforce: "post", // execute after build finished
+    transform: transform // transformation function that returns transformed code
+  };
+}
+```
+
+Now place the code in fix_ssr_esm_modules.js file and then import and use this
+plugin in `vite.config.js` file as follows.
+
+```diff
++ import fix_ssr_esm_modules from "./fix_ssr_esm_imports.js";
+
+export default defineConfig({
+  plugins: [
+    react(),
+    mdx({
+      providerImportSource: "@mdx-js/react",
+    }),
+    ssr(),
++   fix_ssr_esm_modules([
++     { find: "react/jsx-runtime", replacement: "react/jsx-runtime.js" },
++     { find: "react-dom/server", replacement: "react-dom/server.js" },
++   ]),
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        format: "es",
+      },
+    },
+  },
+});
+```
+
+The plugin transforms the build files and replaces the import as given as
+options to the plugin.
+
+Now you can run `npm run prerender` and serve the files in `dist\client`
+statically using `npx serve`. Congratulations :star2:, you just built a static
+site using vite-plugin-ssr.
+
+## Final touch
+
+The final version of the source code of the project is available in github
+[naveennamani/vite-ssr-mdx](https://github.com/naveennamani/vite-ssr-mdx).
+
+> There is a small inconsistency with `server/index.js` file, but that's an
+> alternative I found while I'm writing this article.
+
+Sorry for the long post, if you come here after all, here is a potato for you.
+
+<center>
+  ![Potato](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/uo9nvf5zpvlr2csi64kw.jpg)
+</center>
