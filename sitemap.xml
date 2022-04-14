@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+   <url>
+      <loc>https://naveennamani.github.io/</loc>
+   </url>
+   <url>
+      <loc>https://naveennamani.github.io/blog</loc>
+   </url>
+   <url>
+      <loc>https://naveennamani.github.io/blog/2020/08/custom-scripts-in-windows-contextmenu</loc>
+   </url>
+   <url>
+      <loc>https://naveennamani.github.io/blog/2021/10/generate_offline_documentation_of_reactjs</loc>
+   </url>
+   <url>
+      <loc>https://naveennamani.github.io/blog/2021/10/offline-documentation-of-tailwindcss-in-5-easy-steps</loc>
+   </url>
+   <url>
+      <loc>https://naveennamani.github.io/blog/2021/11/my-hacktoberfest-honest-review</loc>
+   </url>
+   <url>
+      <loc>https://naveennamani.github.io/blog/2022/04/vite-plugin-ssr-esm-problems</loc>
+   </url>
+   <url>
+      <loc>https://naveennamani.github.io/projects</loc>
+   </url>
+</urlset>
