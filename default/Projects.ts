@@ -1,5 +1,29 @@
 export const projects = [
   {
+    name: "offline-docs",
+    repo: "https://github.com/naveennamani/offline-docs/",
+    description:
+      "A collection of scripts to build offline documentation for your favourite frameworks/libraries. Simply search, copy/paste the commands and enjoy.",
+    tags: [
+      "static-site-generator",
+      "ssg",
+      "build-tool",
+      "documentation-generator",
+      "javascript",
+      "python"
+    ],
+    links: [
+      {
+        text: "Github repo",
+        url: "https://github.com/naveennamani/offline-docs/"
+      },
+      {
+        text: "Blog post",
+        url: "/blog/2022/04/introducing-offline-docs"
+      }
+    ]
+  },
+  {
     name: "My personal website",
     repo: "https://github.com/naveennamani/naveennamani.github.io/",
     description:
